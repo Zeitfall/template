@@ -14,7 +14,10 @@ server.start({
 });
 
 esbuild.build({
-  entryPoints: ['src/App.ts', 'src/assets/scss/App.scss'],
+  entryPoints: [
+    'src/App.ts',
+    // 'src/assets/scss/App.scss'
+  ],
   outdir: 'public',
   bundle: true,
   watch: true,

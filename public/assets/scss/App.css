@@ -9,8 +9,17 @@ body {
   height: 100%;
 }
 body {
+  display: grid;
+  place-content: center;
   font-family:
     Arial,
     Helvetica,
     sans-serif;
+}
+.linechart {
+  outline: 1px solid black;
+}
+.linechart polyline {
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
