@@ -1,0 +1,33 @@
+{
+  "name": "template",
+  "version": "1.0.0",
+  "description": "project template based on esbuild and typescript",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node esbuild.config.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zeitfall/template.git"
+  },
+  "keywords": [
+    "template",
+    "esbuild",
+    "typescript"
+  ],
+  "author": "zeitfall (zzeitfall@gmail.com)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zeitfall/template/issues"
+  },
+  "homepage": "https://github.com/Zeitfall/template#readme",
+  "devDependencies": {
+    "@compodoc/live-server": "^1.2.3",
+    "@types/node": "^18.11.3",
+    "autoprefixer": "^10.4.12",
+    "dotenv": "^16.0.3",
+    "esbuild": "^0.15.12",
+    "esbuild-sass-plugin": "^2.3.3",
+    "postcss": "^8.4.18"
+  }
+}
