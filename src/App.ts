@@ -1,31 +1,29 @@
-import { Renderer } from "@components/Renderer";
+import { Scene } from '@components/Scene';
 
-
-// TEST
-const canvas = document.querySelector('canvas');
-const context = canvas.getContext('2d');
-
-const R = new Renderer(canvas, context, {
+//TEST
+const scene = new Scene(document.body, {
+  name: 'scene-1',
+  size: [512, 512],
   backgroundColor: '#101010',
-  FPS: 60,
-  coordinateSystemCentered: false,
 });
 
-let x = 0, y = 0;
-let vx = 2, vy = 5;
+let x = 256, y = 256;
+let vx = 0, vy = 0;
+let ax = 0, ay = .5;
 
-R.render((context, time) => {
-  context.fillStyle = 'white';
-  context.fillRect(x, y, 100, 100);
+scene.render(({ width, height }, context, time) => {
 
-  if (x >= canvas.width - 100 || x < 0) {
-    vx *= -1;
-  }
-
-  if (y >= canvas.height - 100 || y < 0) {
+  if (y > height - 30) {
     vy *= -1;
   }
 
-  x += vx;
+  context.fillStyle = '#eee';
+  context.beginPath();
+  context.arc(x, y, 30, 0, 2*Math.PI, false);
+  context.fill();
+
+  vx += ax;
+  vy += ay;
   y += vy;
+  x += vx;
 });

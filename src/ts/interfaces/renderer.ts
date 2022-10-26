@@ -16,5 +16,5 @@ export interface RendererInterface {
 export interface RendererOptionsInterface {
   FPS?: number;
   backgroundColor: RendererBackground.TRANSPARENT | string;
-  coordinateSystemCentered: boolean;
+  coordinateSystemCentered?: boolean;
 }

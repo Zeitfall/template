@@ -10,18 +10,16 @@ export const Renderer: RendererConstructorInterface = class implements RendererI
   private readonly canvas: HTMLCanvasElement;
   private readonly context: CanvasRenderingContext2D;
   private readonly options: RendererOptionsInterface;
-  private readonly FPS: number;
   private dt: number = 0;
 
   constructor(
     canvas: HTMLCanvasElement,
     context: CanvasRenderingContext2D,
-    { FPS = 60, ...options }: RendererOptionsInterface,
+    { FPS = 60, coordinateSystemCentered = false, ...options }: RendererOptionsInterface,
   ) {
     this.canvas = canvas;
     this.context = context;
-    this.options = options;
-    this.FPS = FPS;
+    this.options = { FPS, coordinateSystemCentered, ...options };
   }
 
   private initializeCoordinateSystem(): void {
@@ -42,12 +40,12 @@ export const Renderer: RendererConstructorInterface = class implements RendererI
   render(callback: RendererCallbackType): void {
     this.initializeCoordinateSystem();
 
-    callback(this.context, this.dt);
+    callback(this.canvas, this.context, this.dt);
 
     this.dt++;
     this.context.restore();
 
     setTimeout(() => 
-      requestAnimationFrame(this.render.bind(this, callback)), 1000 / this.FPS);
+      requestAnimationFrame(this.render.bind(this, callback)), 1000 / this.options.FPS);
   }
 }

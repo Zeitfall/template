@@ -5,13 +5,11 @@
     canvas;
     context;
     options;
-    FPS;
     dt = 0;
-    constructor(canvas2, context2, { FPS = 60, ...options }) {
-      this.canvas = canvas2;
-      this.context = context2;
-      this.options = options;
-      this.FPS = FPS;
+    constructor(canvas, context, { FPS = 60, coordinateSystemCentered = false, ...options }) {
+      this.canvas = canvas;
+      this.context = context;
+      this.options = { FPS, coordinateSystemCentered, ...options };
     }
     initializeCoordinateSystem() {
       this.context.save();
@@ -27,35 +25,65 @@
     }
     render(callback) {
       this.initializeCoordinateSystem();
-      callback(this.context, this.dt);
+      callback(this.canvas, this.context, this.dt);
       this.dt++;
       this.context.restore();
-      setTimeout(() => requestAnimationFrame(this.render.bind(this, callback)), 1e3 / this.FPS);
+      setTimeout(() => requestAnimationFrame(this.render.bind(this, callback)), 1e3 / this.options.FPS);
+    }
+  };
+
+  // src/components/Scene.ts
+  var Scene = class {
+    node;
+    canvas;
+    context;
+    renderer;
+    options;
+    constructor(node, options) {
+      this.node = node;
+      this.options = options;
+      this.__init();
+    }
+    __init() {
+      const { name, size, ...RENDERER_OPTIONS } = this.options;
+      const [width, height] = size;
+      const ATTRIBUTES = { name, width, height };
+      this.canvas = document.createElement("canvas");
+      this.context = this.canvas.getContext("2d");
+      this.renderer = new Renderer(this.canvas, this.context, RENDERER_OPTIONS);
+      Object.entries(ATTRIBUTES).forEach(([name2, value]) => {
+        this.canvas.setAttribute(name2, `${value}`);
+      });
+      this.node.insertAdjacentElement("afterbegin", this.canvas);
+    }
+    render(callback) {
+      return this.renderer.render(callback);
     }
   };
 
   // src/App.ts
-  var canvas = document.querySelector("canvas");
-  var context = canvas.getContext("2d");
-  var R = new Renderer(canvas, context, {
-    backgroundColor: "#101010",
-    FPS: 60,
-    coordinateSystemCentered: false
+  var scene = new Scene(document.body, {
+    name: "scene-1",
+    size: [512, 512],
+    backgroundColor: "#101010"
   });
-  var x = 0;
-  var y = 0;
-  var vx = 2;
-  var vy = 5;
-  R.render((context2, time) => {
-    context2.fillStyle = "white";
-    context2.fillRect(x, y, 100, 100);
-    if (x >= canvas.width - 100 || x < 0) {
-      vx *= -1;
-    }
-    if (y >= canvas.height - 100 || y < 0) {
+  var x = 256;
+  var y = 256;
+  var vx = 0;
+  var vy = 0;
+  var ax = 0;
+  var ay = 0.5;
+  scene.render(({ width, height }, context, time) => {
+    if (y > height - 30) {
       vy *= -1;
     }
-    x += vx;
+    context.fillStyle = "#eee";
+    context.beginPath();
+    context.arc(x, y, 30, 0, 2 * Math.PI, false);
+    context.fill();
+    vx += ax;
+    vy += ay;
     y += vy;
+    x += vx;
   });
 })();
