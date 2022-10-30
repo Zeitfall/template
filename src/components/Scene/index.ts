@@ -9,13 +9,14 @@ import {
 import { RendererCallbackType } from '@types';
 
 export const Scene: SceneConstructorInterface = class implements SceneInterface {
-  private readonly node: HTMLElement | Element;
   private canvas: HTMLCanvasElement;
   private context: CanvasRenderingContext2D;
   private renderer: RendererInterface;
-  private readonly options: SceneOptionsInterface;
 
-  constructor(node: HTMLElement | Element, options: SceneOptionsInterface) {
+  constructor(
+    private readonly node: HTMLElement | Element,
+    private readonly options: SceneOptionsInterface,
+  ) {
     this.node = node;
     this.options = options;
 

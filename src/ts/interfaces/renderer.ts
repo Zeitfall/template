@@ -6,7 +6,7 @@ export interface RendererConstructorInterface {
     canvas: HTMLCanvasElement,
     context: CanvasRenderingContext2D,
     options: RendererOptionsInterface
-    ): RendererInterface;
+  ): RendererInterface;
 }
 
 export interface RendererInterface {
@@ -14,7 +14,7 @@ export interface RendererInterface {
 }
 
 export interface RendererOptionsInterface {
-  FPS?: number;
+  FPS: number;
   backgroundColor: RendererBackground.TRANSPARENT | string;
-  coordinateSystemCentered?: boolean;
+  coordinateSystemCentered: boolean;
 }

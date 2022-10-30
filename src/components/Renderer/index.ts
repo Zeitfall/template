@@ -7,19 +7,16 @@ import {
 } from "@interfaces";
 
 export const Renderer: RendererConstructorInterface = class implements RendererInterface {
-  private readonly canvas: HTMLCanvasElement;
-  private readonly context: CanvasRenderingContext2D;
-  private readonly options: RendererOptionsInterface;
   private dt: number = 0;
 
   constructor(
-    canvas: HTMLCanvasElement,
-    context: CanvasRenderingContext2D,
-    { FPS = 60, coordinateSystemCentered = false, ...options }: RendererOptionsInterface,
+    private readonly canvas: HTMLCanvasElement,
+    private readonly context: CanvasRenderingContext2D,
+    private readonly options: RendererOptionsInterface,
   ) {
     this.canvas = canvas;
     this.context = context;
-    this.options = { FPS, coordinateSystemCentered, ...options };
+    this.options = options;
   }
 
   private initializeCoordinateSystem(): void {
