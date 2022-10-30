@@ -10,3 +10,8 @@ export {
   SceneInterface,
   SceneOptionsInterface,
 } from './scene';
+
+export {
+  VectorConstructorInterface,
+  VectorInterface,
+} from './vector';
